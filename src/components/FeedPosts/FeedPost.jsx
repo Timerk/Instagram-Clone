@@ -1,5 +1,6 @@
-import { Container } from '@chakra-ui/react'
-import React from 'react'
+import { Container, Flex, Box, Image } from '@chakra-ui/react'
+import { PostFooder } from './PostFooder'
+import { PostHeader } from './PostHeader'
 
 const FeedPost = ({img, username, avatar}) => {
   return (
