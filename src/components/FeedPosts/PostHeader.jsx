@@ -1,6 +1,5 @@
 import { Flex, Box, Avatar } from "@chakra-ui/react"
 import { HiDotsHorizontal } from "react-icons/hi";
-import { LuDot } from "react-icons/lu";
 
 export const PostHeader = ({username, avatar}) => {
   return (

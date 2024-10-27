@@ -1,7 +1,7 @@
 import { Container } from "@chakra-ui/react"
 import { Flex, Box } from "@chakra-ui/react"
 import { FeedPosts } from "../../components/FeedPosts/FeedPosts"
-
+import { SuggestedUsers } from "../../components/SuggestedUsers/SuggestedUsers"
 
 export const HomePage = () => {
   return (
@@ -10,8 +10,8 @@ export const HomePage = () => {
         <Box flex={2} py={10}>
           <FeedPosts></FeedPosts>
         </Box>
-        <Box flex={3} mr={20} maxW={"300px"} display={{base:"none", lg:"block"}} border={"1px solid red"}>
-          Friend
+        <Box flex={3} mr={20} maxW={"300px"} display={{base:"none", lg:"block"}} py={5}>
+          <SuggestedUsers></SuggestedUsers>
         </Box>
       </Flex>
     </Container>
