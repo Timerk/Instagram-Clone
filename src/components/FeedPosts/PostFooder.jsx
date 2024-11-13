@@ -2,7 +2,7 @@ import { Flex, Box, Text, InputGroup, Input, InputRightElement, Button } from "@
 import { useState } from "react"
 import { NotificationsLogo, UnlikeLogo, CommentLogo } from "../../assets/constants"
 
-export const PostFooder = ({username}) => {
+export const PostFooder = ({username, isProfilePost}) => {
 
   const [liked, setLiked] = useState(false)
   const [likes, setLikes] = useState(1000)
@@ -18,7 +18,7 @@ export const PostFooder = ({username}) => {
   }
 
   return (
-    <Box mb={10}>
+    <Box mb={10} marginTop={"auto"}>
       <Flex alignItems={"center"} gap={4} mt={4} w={"full"} pt={0} mb={2}>
         <Box cursor={"pointer"} onClick={handleLike}>
           {!liked ? <NotificationsLogo/> : <UnlikeLogo/>}
@@ -30,16 +30,16 @@ export const PostFooder = ({username}) => {
       <Text fontWeight={600} fontSize={"sm"} w={"full"}>
         {likes} likes
       </Text>
-      <Text fontWeight={700} fontSize={"sm"} w={"full"}>
-        {username}{" "}
-        <Text fontWeight={400} fontSize={"sm"} as={"span"}>
-          Nice post
-        </Text>
-      </Text>
-      <Text fontWeight={400} fontSize={"sm"} w={"full"} cursor={"pointer"} color={"gray"}>
-        View other comments
-      </Text>
-
+      {!isProfilePost && (
+        <>
+          <Text fontWeight={700} fontSize={"sm"} w={"full"}>
+            {username}{" "}
+          </Text>
+          <Text fontWeight={400} fontSize={"sm"} w={"full"} cursor={"pointer"} color={"gray"}>
+            View other comments
+          </Text>
+        </>
+      )}
       <Flex justifyContent={"space-between"} alignContent={"center"} gap={2} w={"full"}>
         <InputGroup>
           <Input variant={"flushed"} placeholder={"comment"} fontSize={14}/>

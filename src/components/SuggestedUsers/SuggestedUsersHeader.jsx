@@ -5,7 +5,7 @@ export const SuggestedUsersHeader = ({username, avatar}) => {
   return (
     <Flex alignItems={"center"} justifyContent={"space-between"} w={"full"} my={2}>
         <Flex alignItems={"center"} gap={2}>
-            <Avatar src={avatar} alt="user" size={"md"}/>
+          <Avatar src={avatar} alt="user" size={"md"}/>
         <Flex fontSize={12} fontWeight={"bold"} gap={2} alignItems={"center"}>
           {username}
         </Flex>
