@@ -12,7 +12,7 @@ export const ProfilePage = () => {
       </Flex>
       <Flex px={{base:2, sm:4}} maxW={"full"} mx={"auto"} borderColor={"whiteAlpha.700"} direction={"column"}>
         <ProfileTabs/>
-        <ProfilePosts/>
+        <ProfilePosts avatar={"img1.png"}/>
       </Flex>
       
     </Container>
