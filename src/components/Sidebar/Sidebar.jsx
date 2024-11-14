@@ -1,8 +1,9 @@
-import { Box, Flex, Link, Avatar, Tooltip } from "@chakra-ui/react"
+import { Box, Flex, Link, Avatar, Tooltip, Button } from "@chakra-ui/react"
 import { Link as RouterLink} from "react-router-dom"
 import { CreatePostLogo, InstagramLogo, InstagramMobileLogo, NotificationsLogo, SearchLogo} from "../../assets/constants"
 import { AiFillHome } from "react-icons/ai";
 import { BiLogOut } from "react-icons/bi";
+import useLogout from "../../hooks/useLogout";
 
 export const Sidebar = () => {
     const sidebarItems = [
@@ -24,13 +25,13 @@ export const Sidebar = () => {
             text: "Notifications",
         },
         {
-            icon: <Avatar size={"sm"} name="Mossi" src='./profilepic.png'/>,
+            icon: <Avatar size={"xs"} name="Mossi" src='./profilepic.png'/>,
             text: "Profile",
             link: "/asaprogrammer"
         }
     ];
 
-    
+    const{handleLogout, isLoggingOut} = useLogout();
   return (
     <Box
         height={"100vh"}
@@ -58,7 +59,7 @@ export const Sidebar = () => {
                 w={10}
                 cursor='pointer'
             >
-                <InstagramMobileLogo />
+            <InstagramMobileLogo />
             </Link>
             <Flex direction={"column"} gap={5} cursor={"pointer"}>
                 {sidebarItems.map((item, index) => (
@@ -99,10 +100,8 @@ export const Sidebar = () => {
                 openDelay={500}
                 display={{base:"block", md:"none"}}
             >
-                <Link
-                    display={"flex"}
-                    to={"/auth"}
-                    as={RouterLink}
+                <Flex
+                    onClick={handleLogout}
                     alignItems={"center"}
                     gap={4}
                     _hover={{bg:"whiteAlpha.400"}}
@@ -113,10 +112,10 @@ export const Sidebar = () => {
                     justifyContent={{base:"center", md:"flex-start"}}
                 >
                     <BiLogOut size={25}/>
-                    <Box display={{base:"none", md:"block"}}>
+                    <Button display={{base:"none", md:"block"}} variant={"ghost"} _hover={{bg:"transparent"}} isLoading={isLoggingOut}>
                         Logout
-                    </Box>
-                </Link>
+                    </Button>
+                </Flex>
             </Tooltip>
         </Flex>
     </Box>
