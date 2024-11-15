@@ -1,11 +1,11 @@
 import  { SuggestedUser }  from "./SuggestedUser"
-import { SuggestedUsersHeader } from "./SuggestedUsersHeader"
+import SuggestedUsersHeader from "./SuggestedUsersHeader"
 import { VStack, Flex, Box, Text, Link as ChakraLink } from "@chakra-ui/react"
 
 export const SuggestedUsers = () => {
   return (
     <VStack py={8} px={6} gap={4}>
-      <SuggestedUsersHeader username="Dim" avatar="img2.png"/>
+      <SuggestedUsersHeader/>
       <Flex alignItems={"center"} justifyContent={"space-between"} w={"full"} fontSize={12} fontWeight={"medium"}>
         <Text fontSize={12} fontWeight={"bold"} color={"whiteAlpha.700"}>
           Suggested for you
