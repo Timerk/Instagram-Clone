@@ -7,6 +7,7 @@ import useAuthStore from "../store/authStore";
 const useSignUpWithEmailAndPassword = () => {
     const [
         createUserWithEmailAndPassword,
+		user,
         loading,
         error,
     ] = useCreateUserWithEmailAndPassword(auth);
@@ -57,7 +58,6 @@ const useSignUpWithEmailAndPassword = () => {
 			}
 		} catch (error) {
 			showToast("Error", error.message, "error");
-			console.log("Unexpected error:", error.message);
 		}
     };
 
