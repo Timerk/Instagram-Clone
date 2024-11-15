@@ -1,9 +1,8 @@
 import { Box, VStack, Image, Flex, Text } from '@chakra-ui/react'
-import { px } from 'framer-motion';
 import { useState } from 'react'
 import { Login } from './Login';
 import { SignUp } from './SignUp';
-import { GoogleAuth } from './GoogleAuth';
+import GoogleAuth from './GoogleAuth';
 
 export const AuthForm = () => {
   const [isLogin, setIsLogin] = useState(true);

@@ -18,8 +18,8 @@ export const SuggestedUser = ({username, avatar, followers}) => {
             </VStack>
         </Flex>
         <Button cursor={"pointer"} 
-                fontSize={12} f
-                ontWeight={"medium"} 
+                fontSize={12}
+                fontWeight={"medium"} 
                 color={"blue.500"} 
                 bg={"transparent"} p={0} 
                 h={"max-content"} 
