@@ -46,9 +46,8 @@ export const SignUp = () => {
 
         {error && (
             <Alert status={"error"} p={2} fontSize={13} borderRadius={4}>
-                <AlertIcon fontSize={12}>
+                <AlertIcon fontSize={12}/>
                     {error.message}
-                </AlertIcon>
             </Alert>
         )}
 
