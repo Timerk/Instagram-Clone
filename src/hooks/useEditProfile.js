@@ -42,7 +42,7 @@ const useEditProfile = () => {
             localStorage.setItem("users-info", JSON.stringify(updatedUserData))
             setAuthUser(updatedUserData)
             setUpdatedUser(updatedUserData)
-            showToast("Sucess", "Profile sucessfully updated", "sucess")
+            showToast("Success", "Profile successfully updated", "success")
         } catch (error) {
             showToast("Error", error.message, "error")
         }
