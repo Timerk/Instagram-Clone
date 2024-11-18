@@ -1,10 +1,16 @@
 import { Flex, Avatar, Text, AvatarGroup, VStack, Button } from "@chakra-ui/react"
+import useUserProfileStore from "../../store/userProfileStore"
+import useAuthStore from "../../store/authStore"
 
 export const ProfileHeader = ({username, avatar}) => {
+    const { userProfile } = useUserProfileStore()
+    const authUser = useAuthStore(state => state.user)
+    const ownProfile = authUser && authUser.username === userProfile.username
+    const notOwnProfileAndAuth = authUser && authUser.username !== userProfile.username
   return (
     <Flex gap={{base:4, sm:10}} py={10} direction={{base:"column", sm:"row"}}>
             <AvatarGroup size={{base:"xl", md:"2xl"}} justifySelf={"center"} alignSelf={"flex-start"} mx={"auto"}>
-                <Avatar src={avatar} alt="user"/>
+                <Avatar src={userProfile.profilePicURL} alt="user"/>
             </AvatarGroup>
             <VStack alignItems={"start"} gap={2} mx={"auto"} flex={1}>
                 <Flex gap={4} direction={{base:"column", sm:"row"}}
@@ -13,30 +19,42 @@ export const ProfileHeader = ({username, avatar}) => {
                     w={"full"}
                 >
                     <Text fontSize={{base:"sm", md:"lg"}}>
-                        {username}
+                        {userProfile.username}
                     </Text>
-                    <Button bg={"whiteAlpha.300"} color={"whiteAlpha.700"} _hover={{bg:"whiteAlpha.500"}} size={{base:"xs", md:"sm"}}>
-                        Edit Profile
-                    </Button>
+                    { ownProfile &&                     
+                        <Flex gap={4} justifyContent={"center"} alignItems={"center"}>
+                            <Button bg={"whiteAlpha.300"} color={"whiteAlpha.700"} _hover={{bg:"whiteAlpha.500"}} size={{base:"xs", md:"sm"}}>
+                                Edit Profile
+                            </Button>
+                        </Flex>
+                    } 
+
+                    { notOwnProfileAndAuth &&
+                        <Flex gap={4} justifyContent={"center"} alignItems={"center"}>
+                            <Button bg={"blue.500"} color={"whiteAlpha.700"} _hover={{bg:"blue.600"}} size={{base:"xs", md:"sm"}}>
+                                Follow
+                            </Button>
+                        </Flex>
+                    }
                 </Flex>
                 <Flex alignItems={"center"} gap={{base:2, sm:4}}>
                     <Text fontSize={{base:"xs", md:"sm"}}>
-                        <Text as="span" fontWeight={"bold"}  mr={1}>7</Text>
+                        <Text as="span" fontWeight={"bold"}  mr={1}>{userProfile.posts.length}</Text>
                         Posts
                     </Text>
                     <Text fontSize={{base:"xs", md:"sm"}}>
-                        <Text as="span" fontWeight={"bold"}  mr={1}>100</Text>
+                        <Text as="span" fontWeight={"bold"}  mr={1}>{userProfile.followers.length}</Text>
                         Followers
                     </Text>
                     <Text fontSize={{base:"xs", md:"sm"}}>
-                        <Text as="span" fontWeight={"bold"}  mr={1}>256</Text>
+                        <Text as="span" fontWeight={"bold"}  mr={1}>{userProfile.following.length}</Text>
                         Following
                     </Text>
                 </Flex>
                 <Flex gap={4} alignItems={"center"}>
-                    <Text fontSize={"sm"} fontWeight={"bold"}>{username}</Text>
+                    <Text fontSize={"sm"} fontWeight={"bold"}>{userProfile.bio}</Text>
                 </Flex>
-                <Text fontSize={"sm"}>Test bio</Text>
+                <Text fontSize={"sm"}>{userProfile.fullName}</Text>
             </VStack>
     </Flex>
   )
