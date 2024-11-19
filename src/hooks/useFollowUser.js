@@ -8,12 +8,15 @@ import { firestore } from "../firebase/firebase"
 const useFollowUser = (userId) => {
     const [ isUpdating, setIsUpdating ] = useState(false)
     const [ isFollowing, setIsFollowing ] = useState(false) 
-    const { user, setUser } = useAuthStore(state => state.user)
+    const user = useAuthStore((state) => state.user);
+	const setUser = useAuthStore((state) => state.setUser);
     const { userProfile, setUserProfile } = useUserProfileStore()
     const showToast = useShowToast()
 
     const handleFollowUser = async () => {
         try {
+            setIsUpdating(true)
+            
             const currentUserRef = doc(firestore, "users", user.uid)
             const userToFollowRef  = doc(firestore, "users", userId)
 
@@ -56,13 +59,11 @@ const useFollowUser = (userId) => {
 
                 localStorage.setItem("user-info", JSON.stringify({
                     ...user,
-                    followers: [...user.following, userId]
+                    following: [...user.following, userId]
                 }))
 
                 setIsFollowing(true)
             }
-        
-
         } catch (error) {
             showToast("Error", error.message, "error")
         }finally{
@@ -72,11 +73,11 @@ const useFollowUser = (userId) => {
 
     useEffect(() => {
         if (user) {
-            const isFollowing = authUser.following.includes(userId)
+            const isFollowing = user.following.includes(userId)
             setIsFollowing(isFollowing)
         }
-    },[authUser, userId])
-
+    },[user, userId])
+    
     return{ isFollowing, isUpdating, handleFollowUser }
 }
 
