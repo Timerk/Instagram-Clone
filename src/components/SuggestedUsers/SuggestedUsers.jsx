@@ -14,10 +14,10 @@ export const SuggestedUsers = () => {
           See All
         </Text>
       </Flex>
-      <SuggestedUser username="Skenny" avatar="img1.png" followers={400}/>
-      <SuggestedUser username="Pkenny" avatar="img2.png" followers={361}/>
-      <SuggestedUser username="Fkenny" avatar="img3.png" followers={491}/>
-      <SuggestedUser username="Jkenny" avatar="img4.png" followers={21}/>
+      <SuggestedUser />
+      <SuggestedUser />
+      <SuggestedUser />
+      <SuggestedUser />
 
       <Box fontSize={12} color={"whiteAlpha.700"} mt={5} alignSelf={"start"}>
         © 2024 BUILT BY{" "}

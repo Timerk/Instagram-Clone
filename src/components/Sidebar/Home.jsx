@@ -5,9 +5,8 @@ import { AiFillHome } from "react-icons/ai"
 const Home = () => {
   return (
     <Tooltip
-        key={index}
         hasArrow
-        label={item.text}
+        label={"Home"}
         placement="right"
         ml={1}
         openDelay={500}
@@ -15,7 +14,7 @@ const Home = () => {
     >   
         <Link
             display={"flex"}
-            top={"/"}
+            to={"/"}
             as={RouterLink}
             alignItems={"center"}
             gap={4}
