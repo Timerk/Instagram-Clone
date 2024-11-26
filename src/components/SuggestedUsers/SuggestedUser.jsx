@@ -8,18 +8,20 @@ export const SuggestedUser = ({ user, setUser }) => {
   
   const onFollowUser = async () => {
     await handleFollowUser();
-    setUser((prevUser) => ({
+    if(setUser){
+      setUser((prevUser) => ({
         ...prevUser,
         followers: isFollowing
             ? prevUser.followers.filter((follower) => follower.uid !== authUser.uid)
             : [...prevUser.followers, authUser],
-    }));
+      }));
+    }
   };
 
   return (
     <Flex alignItems={"center"} justifyContent={"space-between"} w={"full"}>
         <Flex alignItems={"center"} gap={2}>
-            <Avatar src={user.profilePicURL} size={"md"}/>
+            <Avatar src={user?.profilePicURL || ""} size={"md"}/>
             <VStack spacing={2}>
               <Text fontSize={12} fontWeight={"bold"} alignSelf={"start"}>
                 {user.username}
