@@ -8,10 +8,10 @@ export const HomePage = () => {
     <Container maxW={"container.lg"}>
       <Flex gap={20}>
         <Box flex={2} py={10}>
-          <FeedPosts></FeedPosts>
+          <FeedPosts/>
         </Box>
         <Box flex={3} mr={20} maxW={"300px"} display={{base:"none", lg:"block"}} py={5}>
-          {/*<SuggestedUsers></SuggestedUsers>*/}
+          <SuggestedUsers/>
         </Box>
       </Flex>
     </Container>
