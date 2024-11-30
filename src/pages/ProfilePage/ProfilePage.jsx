@@ -24,7 +24,7 @@ export const ProfilePage = () => {
       </Flex>
       <Flex px={{base:2, sm:4}} maxW={"full"} mx={"auto"} borderColor={"whiteAlpha.700"} direction={"column"}>
         <ProfileTabs/>
-        <ProfilePosts avatar={"img1.png"}/>
+        <ProfilePosts avatar={userProfile?.profilePicURL} username={userProfile?.username}/>
       </Flex>
       
     </Container>

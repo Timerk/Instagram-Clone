@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import useUserProfileStore from "../store/userProfileStore"
 import useShowToast from "./useShowToast"
 import useAuthStore from "../store/authStore"
@@ -11,13 +11,22 @@ import { getDownloadURL, ref, uploadString } from "firebase/storage"
 const useCreatePost = () => {
     const showToast = useShowToast()
     const [ isLoading, setIsLoading ] = useState(false) 
-    const userProfile = useUserProfileStore((state) => state.userProfile)
-    const addPost = useUserProfileStore(state => state.addPost)
     const authUser = useAuthStore((state) => state.user)
+    const userProfile = useUserProfileStore((state) => state.userProfile)
+    const setUserProfile = useUserProfileStore((state) => state.setUserProfile)
     const createPost = usePostStore(state => state.createPost)
+    const addPost = useUserProfileStore((state) => state.addPost);
     const {pathname} = useLocation()
 
+    useEffect(() => {
+        if (!userProfile && authUser && pathname === "/") {
+            setUserProfile(authUser);
+        }
+    }, [userProfile, authUser, pathname, setUserProfile]);
+
     const handleCreatePost = async(selectedFile , caption) =>{
+        if(isLoading) return
+
         if(!selectedFile) throw new Error("Please select an Image")
         setIsLoading(true)
         const newPost = {
@@ -40,12 +49,12 @@ const useCreatePost = () => {
 
 			newPost.imageURL = downloadURL;
 
-			if (userProfile.uid === authUser.uid) createPost({ ...newPost, id: postDocRef.id });
-
-			if (pathname !== "/" && userProfile.uid === authUser.uid) addPost({ ...newPost, id: postDocRef.id });
+            createPost({...newPost, id:postDocRef.id})
+            addPost({...newPost, id:postDocRef.id})
 
 			showToast("Success", "Post created successfully", "success");
         } catch (error) {
+
             showToast("Error", error.message, "error")
         }finally{
             setIsLoading(false)
