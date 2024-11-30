@@ -1,6 +1,7 @@
-import { Flex, Box, Avatar, VStack, Text, Button } from "@chakra-ui/react"
+import { Flex, Avatar, VStack, Text, Button } from "@chakra-ui/react"
 import useAuthStore from "../../store/authStore"
 import useFollowUser from "../../hooks/useFollowUser"
+import { Link } from "react-router-dom"
 
 export const SuggestedUser = ({ user, setUser }) => {
   const { isFollowing, isUpdating, handleFollowUser } = useFollowUser(user?.uid)
@@ -20,18 +21,24 @@ export const SuggestedUser = ({ user, setUser }) => {
 
   return (
     <Flex alignItems={"center"} justifyContent={"space-between"} w={"full"}>
-        <Flex alignItems={"center"} gap={2}>
-            <Avatar src={user?.profilePicURL || ""} size={"md"}/>
-            <VStack spacing={2}>
-              <Text fontSize={12} fontWeight={"bold"} alignSelf={"start"}>
+      <Flex alignItems={"center"} gap={2}>
+        <Link to={`${user?.username}`}>
+          <Avatar src={user?.profilePicURL || ""} size={"md"} cursor={"pointer"}/>
+        </Link>
+          <VStack spacing={2}>
+            <Link to={`${user?.username}`} style={{ display: "contents" }}>
+              <Text fontSize={12} fontWeight={"bold"} alignSelf={"start"} cursor={"pointer"}>
                 {user.username}
               </Text>
-              <Text fontSize={12} fontWeight={"bold"} color={"whiteAlpha.700"}>
-                {user.followers.length} followers
-              </Text>
-            </VStack>
-        </Flex>
-        { authUser.uid !== user.uid && 
+            </Link>I
+            <Text fontSize={12} fontWeight={"bold"} color={"whiteAlpha.700"}>
+              {user.followers.length} followers
+            </Text>
+          </VStack>
+      </Flex>
+      
+
+        { authUser?.uid !== user?.uid && 
           (
             <Button cursor={"pointer"} 
               fontSize={12}

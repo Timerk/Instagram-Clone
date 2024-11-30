@@ -5,9 +5,13 @@ import { FaComment } from "react-icons/fa"
 import { MdDelete } from "react-icons/md";
 import { Comment } from "../Comment/comment";
 import { PostFooder } from "../FeedPosts/PostFooder";
-export const ProfilePost = ({img, avatar}) => {
+import useAuthStore from "../../store/authStore";
+import useUserProfileStore from "../../store/userProfileStore";
 
+export const ProfilePost = ({post}) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
+  const authUser = useAuthStore((state) => state.user)
+  const userProfile = useUserProfileStore((state) => state.userProfile)
 
   return (
     <>
@@ -35,18 +39,17 @@ export const ProfilePost = ({img, avatar}) => {
         <Flex justifyContent={"center"} alignItems={"center"} gap={50}>
           <Flex>
             <AiFillHeart size={20}/>
-            <Text fontWeight={"bold"} ml={2}>12</Text>
+            <Text fontWeight={"bold"} ml={2}>{post.likes.length}</Text>
           </Flex>
           <Flex>
-            <FaComment size={20}>
+            <FaComment size={20}/>
               <Text fontWeight={"bold"} ml={2}>
-                comments
+                {post.comments.length}
               </Text>
-            </FaComment>
           </Flex>
         </Flex>
       </Flex>
-      <Image src={img} w={"100%"} h={"100%"} alt="post" objectFit={"cover"}/>
+      <Image src={post.imageURL} w={"100%"} h={"100%"} alt="post" objectFit={"cover"}/>
       </GridItem>
 
       <Modal isOpen={isOpen} onClose={onClose}
@@ -57,19 +60,22 @@ export const ProfilePost = ({img, avatar}) => {
         <ModalContent>
           <ModalCloseButton />
           <ModalBody bg={"gray.900"} pb={5}>
-            <Flex gap={4} w={{base:"90%", sm:"70%", md:"full"}} mx={"auto"}>
-              <Box borderRadius={4} overflow={"hidden"} border={"1px solid"} borderColor={"blackAlpha.700"} flex={1.5}>
-                <Image src={img} alt="posted pic"/>
-              </Box>
+            <Flex gap={4} w={{base:"90%", sm:"70%", md:"full"}} mx={"auto"} maxHeight={"90vh"} minHeight={"50vh"}>
+              <Flex borderRadius={4} overflow={"hidden"} flex={1.5} justifyContent={"center"} alignItems={"center"}>
+                <Image src={post.imageURL} alt="posted pic" border={"1px solid"} borderColor={"blackAlpha.700"}/>
+              </Flex>
               <Flex flex={1} flexDirection={"column"} px={10} display={{base:"none", md:"flex"}}>
                 <Flex alignItems={"center"} justifyContent={"space-between"}>
                   <Flex gap={4} alignItems={"center"}>
-                    <Avatar src={avatar} alt="profile avatar" size={"sm"}/>
-                    <Text fontSize={12} fontWeight={"bold"}>Mossi</Text>
+                    <Avatar src={userProfile?.profilePicURL} alt="profile avatar" size={"sm"}/>
+                    <Text fontSize={12} fontWeight={"bold"}>{userProfile?.username}</Text>
                   </Flex>
-                  <Box _hover={{bg:"whiteAlpha.300", color: "red.600"}} borderRadius={4} p={1}>
-                    <MdDelete cursor={"pointer"} size={20}></MdDelete>
-                  </Box>
+
+                  {authUser.uid === userProfile.uid && (
+                    <Button size={"sm"} bg={"transparent"} _hover={{bg:"whiteAlpha.300", color: "red.600"}} borderRadius={4} p={1} >
+                      <MdDelete cursor={"pointer"} size={20}></MdDelete>
+                    </Button>  
+                  )}
                 </Flex>
                 <Divider my={4} bg={"whiteAlpha.800"}/>
 
@@ -81,42 +87,6 @@ export const ProfilePost = ({img, avatar}) => {
                     text="nice pic"
                   />
                   <Comment
-                    createdAt="1d ago"
-                    username="Mossi"
-                    profilePic="/profilepic.png"
-                    text="nice pic"
-                  />
-                  <Comment
-                    createdAt="1d ago"
-                    username="Mossi"
-                    profilePic="/profilepic.png"
-                    text="nice pic"
-                  />
-                  <Comment
-                    createdAt="1d ago"
-                    username="Mossi"
-                    profilePic="/profilepic.png"
-                    text="nice pic"
-                  />
-                                    <Comment
-                    createdAt="1d ago"
-                    username="Mossi"
-                    profilePic="/profilepic.png"
-                    text="nice pic"
-                  />
-                                    <Comment
-                    createdAt="1d ago"
-                    username="Mossi"
-                    profilePic="/profilepic.png"
-                    text="nice pic"
-                  />
-                                    <Comment
-                    createdAt="1d ago"
-                    username="Mossi"
-                    profilePic="/profilepic.png"
-                    text="nice pic"
-                  />
-                                    <Comment
                     createdAt="1d ago"
                     username="Mossi"
                     profilePic="/profilepic.png"
