@@ -1,9 +1,8 @@
-import { useState, useEffect } from "react"
 import { ProfilePost } from "./ProfilePost"
 import { Grid, Skeleton, Box, Flex, Text } from "@chakra-ui/react"
 import useGetUserPost from "../../hooks/useGetUserPost"
 
-export const ProfilePosts = ({avatar, username}) => {
+export const ProfilePosts = () => {
   const { isLoading, posts} = useGetUserPost()
   const noPostsFound = !isLoading && posts.length === 0
   
@@ -20,7 +19,7 @@ export const ProfilePosts = ({avatar, username}) => {
       {!isLoading && (
 				<>
 					{posts.map((post) => (
-						<ProfilePost post={post} key={post.id} avatar={avatar} username={username}/>
+						<ProfilePost post={post} key={post.id}/>
 					))}
 				</>
 			)}
