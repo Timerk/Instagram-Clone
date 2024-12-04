@@ -4,16 +4,16 @@ import { NotificationsLogo, UnlikeLogo, CommentLogo } from "../../assets/constan
 import useCreateComment from "../../hooks/useCreateComment"
 import useShowToast from "../../hooks/useShowToast"
 import useAuthStore from "../../store/authStore"
+import useLikePost from "../../hooks/useLikePost"
 
 export const PostFooder = ({post, isProfilePost}) => {
 
-  const [liked, setLiked] = useState(false)
-  const [likes, setLikes] = useState(1000)
   const {isUploading, handlePostComment} = useCreateComment()
   const [comment , setComment] = useState("")
   const showToast = useShowToast()
   const commentRef = useRef(null)
   const authUser = useAuthStore((state) => state.user)
+  const { handleLikePost, likes, isLiked} = useLikePost({post})
 
   const handleSubmitComment = async() =>{
     try {
@@ -25,22 +25,12 @@ export const PostFooder = ({post, isProfilePost}) => {
 
   }
 
-  const handleLike = () => {
-    if (liked) {
-      setLiked(false)
-      setLikes(likes -1)
-    }else{
-      setLiked(true)
-      setLikes(likes +1)
-    }
-  }
-
   return (
     <Box mb={10} marginTop={"auto"}>
       {authUser && (
         <Flex alignItems={"center"} gap={4} mt={4} w={"full"} pt={0} mb={2}>
-          <Box cursor={"pointer"} onClick={handleLike}>
-            {!liked ? <NotificationsLogo/> : <UnlikeLogo/>}
+          <Box cursor={"pointer"} onClick={handleLikePost}>
+            {!isLiked ? <NotificationsLogo/> : <UnlikeLogo/>}
           </Box>
           <Box cursor={"pointer"} fontSize={18} onClick={() => commentRef.current.focus()}>
             <CommentLogo/>
