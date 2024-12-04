@@ -9,6 +9,7 @@ import useAuthStore from "../../store/authStore";
 import useUserProfileStore from "../../store/userProfileStore";
 import useDeletePost from "../../hooks/useDeletePost";
 import useShowToast from "../../hooks/useShowToast";
+import { Caption } from "../Comment/Caption";
 
 export const ProfilePost = ({post}) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
@@ -16,7 +17,6 @@ export const ProfilePost = ({post}) => {
   const userProfile = useUserProfileStore((state) => state.userProfile)
   const { isDeleting, handleDeletePost } = useDeletePost()
   const showToast = useShowToast()
-
 
   const handlePostDeletion = async () =>{
     try {
@@ -101,7 +101,9 @@ export const ProfilePost = ({post}) => {
                   )}
                 </Flex>
                 <Divider my={4} bg={"whiteAlpha.800"}/>
-
+                {post?.caption !== "" && (
+                  <Caption post={post}/>
+                )}
                 <VStack w={"full"} alignItems={"start"} maxH={350} overflowY={"auto"}>
                   {post?.comments?.map((comment) => (
                     <Comment key={comment.id} comment={comment} />
