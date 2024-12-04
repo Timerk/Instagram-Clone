@@ -42,7 +42,7 @@ export const PostFooder = ({post, isProfilePost}) => {
           <Box cursor={"pointer"} onClick={handleLike}>
             {!liked ? <NotificationsLogo/> : <UnlikeLogo/>}
           </Box>
-          <Box cursor={"pointer"} fontSize={18}>
+          <Box cursor={"pointer"} fontSize={18} onClick={() => commentRef.current.focus()}>
             <CommentLogo/>
           </Box>
         </Flex>
