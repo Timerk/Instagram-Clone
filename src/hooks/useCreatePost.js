@@ -55,7 +55,6 @@ const useCreatePost = () => {
 
 			showToast("Success", "Post created successfully", "success");
         } catch (error) {
-
             showToast("Error", error.message, "error")
         }finally{
             setIsLoading(false)

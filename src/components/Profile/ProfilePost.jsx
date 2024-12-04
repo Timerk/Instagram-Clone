@@ -3,15 +3,29 @@ import { Button, Modal, ModalOverlay, ModalContent, ModalCloseButton, ModalBody 
 import { AiFillHeart } from "react-icons/ai"
 import { FaComment } from "react-icons/fa"
 import { MdDelete } from "react-icons/md";
-import { Comment } from "../Comment/comment";
+import { Comment } from "../Comment/Comment";
 import { PostFooder } from "../FeedPosts/PostFooder";
 import useAuthStore from "../../store/authStore";
 import useUserProfileStore from "../../store/userProfileStore";
+import useDeletePost from "../../hooks/useDeletePost";
+import useShowToast from "../../hooks/useShowToast";
 
 export const ProfilePost = ({post}) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const authUser = useAuthStore((state) => state.user)
   const userProfile = useUserProfileStore((state) => state.userProfile)
+  const { isDeleting, handleDeletePost } = useDeletePost()
+  const showToast = useShowToast()
+
+
+  const handlePostDeletion = async () =>{
+    try {
+      await handleDeletePost(post)
+      onClose()
+    } catch (error) {
+      showToast("Error", error.message, "error")
+    }
+  }
 
   return (
     <>
@@ -71,8 +85,17 @@ export const ProfilePost = ({post}) => {
                     <Text fontSize={12} fontWeight={"bold"}>{userProfile?.username}</Text>
                   </Flex>
 
-                  {authUser.uid === userProfile.uid && (
-                    <Button size={"sm"} bg={"transparent"} _hover={{bg:"whiteAlpha.300", color: "red.600"}} borderRadius={4} p={1} >
+                  {authUser && userProfile && authUser.uid === userProfile.uid && (
+                    <Button 
+                      size={"sm"} 
+                      bg={"transparent"} 
+                      _hover={{bg:"whiteAlpha.300", 
+                      color: "red.600"}} 
+                      borderRadius={4} 
+                      p={1} 
+                      isLoading={isDeleting}
+                      onClick={handlePostDeletion}
+                    >
                       <MdDelete cursor={"pointer"} size={20}></MdDelete>
                     </Button>  
                   )}
@@ -80,21 +103,12 @@ export const ProfilePost = ({post}) => {
                 <Divider my={4} bg={"whiteAlpha.800"}/>
 
                 <VStack w={"full"} alignItems={"start"} maxH={350} overflowY={"auto"}>
-                  <Comment
-                    createdAt="1d ago"
-                    username="Mossi"
-                    profilePic="/profilepic.png"
-                    text="nice pic"
-                  />
-                  <Comment
-                    createdAt="1d ago"
-                    username="Mossi"
-                    profilePic="/profilepic.png"
-                    text="nice pic"
-                  />
+                  {post?.comments?.map((comment) => (
+                    <Comment key={comment.id} comment={comment} />
+                  )) || <Text>No comments available</Text>}
                 </VStack>
                 <Divider my={4} bg={"whiteAlpha.800"}/>
-                <PostFooder isProfilePost={true}/>
+                <PostFooder isProfilePost={true} post={post}/>
               </Flex>
             </Flex>
           </ModalBody>
