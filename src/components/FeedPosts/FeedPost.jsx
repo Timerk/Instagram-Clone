@@ -1,15 +1,15 @@
-import { Container, Flex, Box, Image } from '@chakra-ui/react'
+import { Flex, Image } from '@chakra-ui/react'
 import { PostFooder } from './PostFooder'
 import { PostHeader } from './PostHeader'
 
-const FeedPost = ({img, username, avatar}) => {
+const FeedPost = ({post}) => {
   return (
     <>
-      <PostHeader username={username} avatar={avatar}/>
-      <Box my={2} borderRadius={4} overflow={"hidden"}>
-        <Image src={img} alt={username}/>
-      </Box>
-      {/* <PostFooder username={username}/> */}
+      <PostHeader post={post}/>
+      <Flex my={2} borderRadius={4} overflow={"hidden"} justifyContent={"center"} alignItems={"center"}>
+        <Image src={post.imageURL} alt={"post"}/>
+      </Flex>
+      <PostFooder isProfilePost={false} post={post}/>
     </>
   )
 }

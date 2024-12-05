@@ -1,16 +1,9 @@
 import { Container, VStack, Flex, SkeletonCircle, Skeleton, Box } from "@chakra-ui/react"
 import  FeedPost  from "./FeedPost"
-import { useEffect, useState } from "react"
+import useGetFeedPosts from "../../hooks/useGetFeedPosts"
 
 export const FeedPosts = () => {
-  const [isLoading, setIsLoading] = useState(true)
-
-  useEffect (() => {
-    setTimeout (() => {
-      setIsLoading(false)
-    }, 2000)
-  }, [])
-
+  const { isLoading, posts } = useGetFeedPosts()
 
   return (
     <Container maxW={"container.sm"} py={10} px={2}>
@@ -31,10 +24,9 @@ export const FeedPosts = () => {
           ))}
         {!isLoading && (
           <>
-            <FeedPost img="/img1.png" username="Mossi" avatar="img1.png" />
-            <FeedPost img="/img2.png" username="Meihsei" avatar="img3.png" />
-            <FeedPost img="/img3.png" username="Meh" avatar="img2.png" />
-            <FeedPost img="/img4.png" username="Mo" avatar="img1.png" />
+            {posts.map((post) => (
+              <FeedPost post={post} key={post.id}/>
+            ))}
           </>
         )}
     </Container>
