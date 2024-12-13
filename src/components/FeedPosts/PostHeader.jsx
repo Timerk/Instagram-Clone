@@ -3,8 +3,7 @@ import { HiDotsHorizontal } from "react-icons/hi";
 import  useGetUserProfileById  from "../../hooks/useGetUserProfileById"
 import { Link } from "react-router-dom";
 import { getTimeAgo } from "../../utils/getTimeAgo";
-export const PostHeader = ({post}) => {
-  const {isLoading, userProfile} = useGetUserProfileById(post?.createdBy)
+export const PostHeader = ({post, userProfile}) => {
   const timeAgo = getTimeAgo(post.createdAt)
   
   return (

@@ -54,7 +54,7 @@ const useCreatePost = () => {
             addPost({...newPost, id:postDocRef.id})
 
 			showToast("Success", "Post created successfully", "success");
-        } catch (error) {
+        }catch (error) {
             showToast("Error", error.message, "error")
         }finally{
             setIsLoading(false)
