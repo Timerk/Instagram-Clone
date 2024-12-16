@@ -10,7 +10,7 @@ const useLikePost = ({post}) => {
     const authUser = useAuthStore((state) => state.user)
     const showToast = useShowToast()
     const [likes, setLikes] = useState(post.likes.length)
-    const [isLiked, setIsLiked] = useState(post.likes.includes(authUser.uid))
+    const [isLiked, setIsLiked] = useState(post.likes.includes(authUser?.uid))
     const addOrRemoveLike = usePostStore(state => state.addOrRemoveLike)
 
     const handleLikePost = async () => {

@@ -1,15 +1,18 @@
-import { Container, Flex, Box, Image } from '@chakra-ui/react'
-import { PostFooder } from './PostFooder'
+import { Flex, Image } from '@chakra-ui/react'
+import { FeedPostFooder } from './FeedPostFooder'
 import { PostHeader } from './PostHeader'
+import useGetUserProfileById from '../../hooks/useGetUserProfileById'
 
-const FeedPost = ({img, username, avatar}) => {
+const FeedPost = ({post}) => {
+  const {isLoading, userProfile} = useGetUserProfileById(post?.createdBy)
+  
   return (
     <>
-      <PostHeader username={username} avatar={avatar}/>
-      <Box my={2} borderRadius={4} overflow={"hidden"}>
-        <Image src={img} alt={username}/>
-      </Box>
-      {/* <PostFooder username={username}/> */}
+      <PostHeader post={post} userProfile={userProfile}/>
+      <Flex my={2} borderRadius={4} overflow={"hidden"} justifyContent={"center"} alignItems={"center"}>
+        <Image src={post.imageURL} alt={"post"}/>
+      </Flex>
+      <FeedPostFooder isProfilePost={false} post={post} userProfile={userProfile}/>
     </>
   )
 }

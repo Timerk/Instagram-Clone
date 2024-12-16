@@ -1,72 +1,91 @@
-import { GridItem, Flex, Text, Image, useDisclosure, Avatar, Box, Divider, VStack } from "@chakra-ui/react"
-import { Button, Modal, ModalOverlay, ModalContent, ModalCloseButton, ModalBody } from "@chakra-ui/react";
+import { GridItem, Flex, Text, Image, useDisclosure, useBreakpointValue } from "@chakra-ui/react"
 import { AiFillHeart } from "react-icons/ai"
 import { FaComment } from "react-icons/fa"
-import { MdDelete } from "react-icons/md";
-import { Comment } from "../Comment/Comment";
-import { PostFooder } from "../FeedPosts/PostFooder";
-import useAuthStore from "../../store/authStore";
 import useUserProfileStore from "../../store/userProfileStore";
-import useDeletePost from "../../hooks/useDeletePost";
-import useShowToast from "../../hooks/useShowToast";
-import { Caption } from "../Comment/Caption";
+import ViewPostModal from "../Modals/ViewPostModal";
+import useLikePost from "../../hooks/useLikePost";
+import { useState } from "react";
+import FeedPost from "../FeedPosts/FeedPost";
 
-export const ProfilePost = ({post}) => {
-  const { isOpen, onOpen, onClose } = useDisclosure()
-  const authUser = useAuthStore((state) => state.user)
+export const ProfilePost = ({post, setPostClicked, setInspectedPost}) => {
   const userProfile = useUserProfileStore((state) => state.userProfile)
-  const { isDeleting, handleDeletePost } = useDeletePost()
-  const showToast = useShowToast()
+  const { isOpen, onOpen, onClose } = useDisclosure()
+  const { handleLikePost, likes, isLiked} = useLikePost({post})
 
-  const handlePostDeletion = async () =>{
-    try {
-      await handleDeletePost(post)
-      onClose()
-    } catch (error) {
-      showToast("Error", error.message, "error")
+  const [showFeedPost, setShowFeedPost] = useState(false)
+  const isLargeScreen = useBreakpointValue({ base: false, md: true })
+
+  const handleClick = () => {
+    if (isLargeScreen) {
+      onOpen()
+    } else {
+      setPostClicked(true)
+      setInspectedPost(post)
     }
   }
-
+ 
   return (
     <>
-      <GridItem cursor={"pointer"} 
-      borderRadius={4} 
-      border={"1px solid"} 
-      borderColor={"blackAlpha.700"} 
-      overflow={"hidden"} 
-      position={"relative"}
-      aspectRatio={1/1} 
-      onClick={onOpen}
-    >
-      <Flex opacity={0}
-        _hover={{opacity:1}}
-        justifyContent={"center"}
-        position={"absolute"}
-        top={0}
-        left={0}
-        right={0}
-        bottom={0}
-        bg={"blackAlpha.700"}
-        transition={"all 0.3 ease"}
-        zIndex={1}
-      >
-        <Flex justifyContent={"center"} alignItems={"center"} gap={50}>
-          <Flex>
-            <AiFillHeart size={20}/>
-            <Text fontWeight={"bold"} ml={2}>{post.likes.length}</Text>
+      {!showFeedPost ? (
+        <GridItem 
+          cursor={"pointer"} 
+          borderRadius={4} 
+          border={"1px solid"} 
+          borderColor={"blackAlpha.700"} 
+          overflow={"hidden"} 
+          position={"relative"}
+          aspectRatio={1 / 1} 
+          onClick={handleClick}
+        >
+          <Flex 
+            opacity={0}
+            _hover={{ opacity: 1 }}
+            justifyContent={"center"}
+            position={"absolute"}
+            top={0}
+            left={0}
+            right={0}
+            bottom={0}
+            bg={"blackAlpha.700"}
+            transition={"opacity 0.3s ease"}
+            zIndex={1}
+          >
+            <Flex justifyContent={"center"} alignItems={"center"} gap={10}>
+              <Flex alignItems="center">
+                <AiFillHeart size={20}/>
+                <Text fontWeight={"bold"} ml={2}>{post.likes.length}</Text>
+              </Flex>
+              <Flex alignItems="center">
+                <FaComment size={20}/>
+                <Text fontWeight={"bold"} ml={2}>
+                  {post.comments.length}
+                </Text>
+              </Flex>
+            </Flex>
           </Flex>
-          <Flex>
-            <FaComment size={20}/>
-              <Text fontWeight={"bold"} ml={2}>
-                {post.comments.length}
-              </Text>
-          </Flex>
-        </Flex>
-      </Flex>
-      <Image src={post.imageURL} w={"100%"} h={"100%"} alt="post" objectFit={"cover"}/>
-      </GridItem>
+          <Image src={post.imageURL} w={"100%"} h={"100%"} alt="post" objectFit={"cover"}/>
+        </GridItem>
+      ) : (
+        <FeedPost post={post} />
+      )}
+  
+      {/* ViewPostModal nur für große Bildschirme */}
+      {isLargeScreen && (
+        <ViewPostModal 
+          isOpen={isOpen} 
+          onClose={onClose} 
+          post={post} 
+          userProfile={userProfile}
+          handleLikePost={handleLikePost}
+          likes={likes}
+          isLiked={isLiked} 
+        />
+      )}
+    </>
+  )
+}
 
-      <Modal isOpen={isOpen} onClose={onClose}
+/*       <Modal isOpen={isOpen} onClose={onClose}
         isCentered={true}
         size={{base:"3xl", md:"5xl"}}
       >
@@ -116,6 +135,4 @@ export const ProfilePost = ({post}) => {
           </ModalBody>
         </ModalContent>
       </Modal>
-    </>
-  )
-}
+*/

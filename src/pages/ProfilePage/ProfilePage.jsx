@@ -1,33 +1,62 @@
-import { Container, Flex, Link, Text, VStack, Skeleton, SkeletonCircle } from "@chakra-ui/react"
+import { Container, Flex, Link, Text, VStack, Skeleton, SkeletonCircle, Divider } from "@chakra-ui/react"
 import { ProfileHeader } from "../../components/Profile/ProfileHeader"
 import { ProfileTabs } from "../../components/Profile/ProfileTabs"
 import { ProfilePosts } from "../../components/Profile/ProfilePosts"
 import useGetUserProfileByUsername from "../../hooks/useGetUserProfileByUsername"
 import { useParams } from "react-router-dom"
 import { Link as RouterLink } from "react-router-dom"
+import { useBreakpointValue } from "@chakra-ui/react"
+import { useState, useEffect } from "react"
+import FeedPost from "../../components/FeedPosts/FeedPost"
+import { Button } from "@chakra-ui/react"
+import { IoIosArrowBack } from "react-icons/io";
 
 export const ProfilePage = () => {
   const username = useParams()
   const { isLoading, userProfile } = useGetUserProfileByUsername(username)
+  const isLargeScreen = useBreakpointValue({ base: false, md: true })
+  const [postClicked, setPostClicked] = useState(false)
+  const [inspectedPost, setInspectedPost] = useState(null)
 
   const userNotFound = !isLoading && !userProfile
+
+  useEffect(() => {
+    if (isLargeScreen) {
+      setPostClicked(false);
+    }
+  }, [isLargeScreen]);
 
   if (userNotFound) {
     return <UserNotFound/>
   }
 
   return (
-    <Container maxWidth={"container.lg"} py={5}>
-      <Flex flexDirection={"column"} w={"full"} py={10} px={4} pl={{base:4, md:10}} mx={"auto"}>
-        { !isLoading && userProfile && <ProfileHeader username={userProfile.username} avatar="img1.png"/>}
-        { isLoading && !userProfile && <ProfileHeaderSkeleton/>}
-      </Flex>
-      <Flex px={{base:2, sm:4}} maxW={"full"} mx={"auto"} borderColor={"whiteAlpha.700"} direction={"column"}>
-        <ProfileTabs/>
-        <ProfilePosts/>
-      </Flex>
-      
-    </Container>
+    <>
+      {!postClicked && (      
+        <Container maxWidth={"container.lg"} py={5}>
+          <Flex flexDirection={"column"} w={"full"} py={10} px={4} pl={{base:4, md:10}} mx={"auto"}>
+            { !isLoading && userProfile && <ProfileHeader username={userProfile.username} avatar="img1.png"/>}
+            { isLoading && !userProfile && <ProfileHeaderSkeleton/>}
+          </Flex>
+          <Flex px={{base:2, sm:4}} maxW={"full"} mx={"auto"} borderColor={"whiteAlpha.700"} direction={"column"}>
+            <ProfileTabs/>
+            <ProfilePosts setPostClicked={setPostClicked} setInspectedPost={setInspectedPost}/>
+          </Flex>
+        </Container>
+      )}
+
+      {postClicked && !isLargeScreen && (
+        <VStack align="start" spacing={30}>
+          <Flex align="start" w={"full"} direction={"column"} justifyContent={"center"} marginTop={2}>
+            <IoIosArrowBack size={30} color={"whiteAlpha.800"} cursor={"pointer"} onClick={() => setPostClicked(false)}/>
+            <Divider bg={"whiteAlpha.800"} my={2}/>
+          </Flex> 
+          <Flex direction="column" align="center" w="full" maxW="600px" mx="auto">
+            <FeedPost post={inspectedPost} />
+          </Flex>
+        </VStack>
+      )}
+    </>
   )
 }
 
