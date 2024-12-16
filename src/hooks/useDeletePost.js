@@ -5,12 +5,14 @@ import { firestore, storage } from "../firebase/firebase"
 import useAuthStore from "../store/authStore"
 import { arrayRemove, deleteDoc, doc, updateDoc } from "firebase/firestore"
 import usePostStore from "../store/postStore"
+import useUserProfileStore from "../store/userProfileStore"
 
 const useDeletePost = () => {
     const showToast = useShowToast()
     const [isDeleting, setIsLoading] = useState(false)
     const authUser = useAuthStore((state) => state.user);
     const deletePost = usePostStore(state => state.deletePost)
+    const userProfileDeltePost = useUserProfileStore((state) => state.deletePost)
 
     const handleDeletePost = async (post) =>{
         if(!window.confirm("Are you sure you want to delete this post")) return
@@ -31,6 +33,7 @@ const useDeletePost = () => {
             })
 
             deletePost(post.id)
+            userProfileDeltePost(post.id)
             
             showToast("Success", "Post deleted successfully", "success");
         } catch (error) {

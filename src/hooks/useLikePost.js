@@ -16,6 +16,7 @@ const useLikePost = ({post}) => {
     const handleLikePost = async () => {
         if (isLoading) return
         if (!authUser) return showToast("Error", "Please log in to like a post", "error")
+        setIsLoading(true)
 
         try {
             const postRef = doc(firestore, "posts", post.id)
@@ -24,10 +25,10 @@ const useLikePost = ({post}) => {
                 likes: isLiked ? arrayRemove(authUser.uid) : arrayUnion(authUser.uid)
             })
 
+            setIsLiked(!isLiked)
             isLiked ? setLikes(likes - 1) : setLikes(likes + 1)
 
             addOrRemoveLike(post.id, authUser.uid, isLiked)
-            setIsLiked(!isLiked)
         } catch (error) {
             showToast("Error", error.message, "error")
         }finally{

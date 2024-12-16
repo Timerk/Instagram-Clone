@@ -14,7 +14,7 @@ export const FeedPostFooder = ({post, isProfilePost, userProfile}) => {
   const showToast = useShowToast()
   const commentRef = useRef(null)
   const authUser = useAuthStore((state) => state.user)
-  const { handleLikePost, likes, isLiked} = useLikePost({post})
+  const { handleLikePost, likes, isLiked } = useLikePost({post})
   const { isOpen, onOpen, onClose } = useDisclosure()
 
   const handleSubmitComment = async() =>{
