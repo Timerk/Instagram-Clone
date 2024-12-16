@@ -24,7 +24,7 @@ const SuggestedUsersHeader = () => {
 			<Button
 				size={"xs"}
 				background={"transparent"}
-				_hover={{ background: "transparent" }}
+				_hover={{ background: "transparent", color: "whiteAlpha.700" }}
 				fontSize={14}
 				fontWeight={"medium"}
 				color={"blue.400"}

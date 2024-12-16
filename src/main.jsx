@@ -16,13 +16,11 @@ const styles = {
   })
 }
 
-
 const config = {
   initialColorMode: 'dark',
   useSystemColorMode: false,
 }
 
-// 3. extend the theme
 const theme = extendTheme({ config,styles })
 
 createRoot(document.getElementById('root')).render(
