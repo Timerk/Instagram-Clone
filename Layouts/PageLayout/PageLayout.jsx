@@ -16,7 +16,7 @@ export const PageLayout = ({children}) => {
   if(checkingUserAuth) return <PageLayoutSpinner/>
 
   return (
-    <Flex flexDir={canRenderNavBar ? "column" : "row"} gap={{ base: 1, md: 6 }}>
+    <Flex flexDir={canRenderNavBar ? "column" : "row"} gap={{ base: 2, md: 6 }}>
         {canRenderSideBar ?
             ( <Box w={{base:"70px", md:"240px"}}>
                 <Sidebar/>

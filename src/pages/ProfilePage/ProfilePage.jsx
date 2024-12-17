@@ -9,6 +9,7 @@ import { useBreakpointValue } from "@chakra-ui/react"
 import { useState, useEffect } from "react"
 import FeedPost from "../../components/FeedPosts/FeedPost"
 import { IoIosArrowBack } from "react-icons/io"
+import { base } from "framer-motion/client"
 
 export const ProfilePage = () => {
   const username = useParams()
@@ -50,7 +51,7 @@ export const ProfilePage = () => {
             <IoIosArrowBack size={30} color={"whiteAlpha.800"} cursor={"pointer"} onClick={() => setPostClicked(false)}/>
             <Divider bg={"whiteAlpha.800"} my={2}/>
           </Flex> 
-          <Flex direction="column" align="center" w="full" maxW="600px" mx="auto">
+          <Flex direction="column" align="center" w="full" maxW="600px" mx="auto" pr={2}>
             <FeedPost post={inspectedPost} />
           </Flex>
         </VStack>
@@ -63,7 +64,7 @@ const UserNotFound = () => {
   return (
     <Flex flexDir="column" textAlign="center" mx="auto">
       <Text fontSize="2xl">User Not Found</Text>
-      <Link as={RouterLink} to="/" color="blue.500" w="max-content" mx="auto">
+      <Link as={RouterLink} to="/" color="blue.500" w="max-content" mx="auto"> 
         Go home
       </Link>
     </Flex>
