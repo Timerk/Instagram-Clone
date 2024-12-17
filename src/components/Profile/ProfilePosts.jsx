@@ -23,7 +23,6 @@ export const ProfilePosts = ({setPostClicked, setInspectedPost}) => {
 					))}
 				</>
 			)}
-
     </Grid>
   )
 }
