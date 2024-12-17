@@ -1,9 +1,10 @@
-import { Flex, Box, Spinner } from "@chakra-ui/react"
+import { Flex, Box, Spinner, useBreakpointValue } from "@chakra-ui/react"
 import { Sidebar } from "../../src/components/Sidebar/Sidebar"
 import { useLocation } from "react-router-dom"
 import { useAuthState } from "react-firebase-hooks/auth"
 import { auth } from "../../src/firebase/firebase"
 import NavBar from "../../src/components/NavBar/NavBar"
+import useUserProfileStore from "../../src/store/userProfileStore"
 
 export const PageLayout = ({children}) => {
   const {pathname} = useLocation()  
@@ -13,12 +14,14 @@ export const PageLayout = ({children}) => {
   const checkingUserAuth = !user && loading
 
   if(checkingUserAuth) return <PageLayoutSpinner/>
+
   return (
-    <Flex flexDir={canRenderNavBar ? "column" : "row"}>
+    <Flex flexDir={canRenderNavBar ? "column" : "row"} gap={{ base: 1, md: 6 }}>
         {canRenderSideBar ?
             ( <Box w={{base:"70px", md:"240px"}}>
                 <Sidebar/>
-              </Box>) : null}
+              </Box>) : null
+        }
 
         {canRenderNavBar ? <NavBar/> : null}
 
