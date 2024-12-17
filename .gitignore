@@ -24,3 +24,8 @@ dist-ssr
 *.sw?
 
 .env
+storage.rules
+.firebaserc
+
+firebase.json
+firestore.rules

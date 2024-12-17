@@ -31,28 +31,41 @@ export const SignUp = () => {
         signUp(inputs);
     }
 
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        
+        const newValue = name === 'username' || name === 'password' || name === 'email'
+            ? value.replace(/\s/g, '')
+            : value;
+    
+        setInputs({
+            ...inputs,
+            [name]: newValue
+        });
+    };
+
     return (
       <>
-          <Input placeholder='Email' fontSize={14} type='email'
+          <Input placeholder='Email' name="email" fontSize={14} type='email'
               size={"sm"}
               value={inputs.email}
-              onChange={(e) => setInputs({...inputs, email:e.target.value})}
+              onChange={handleInputChange}
           />
-          <Input placeholder='Username' fontSize={14} type='text'
+          <Input placeholder='Username' name="username" fontSize={14} type='text'
               size={"sm"}
               value={inputs.username}
-              onChange={(e) => setInputs({...inputs, username:e.target.value})}
+              onChange={handleInputChange}
           />
-          <Input placeholder='Full Name' fontSize={14} type='text'
+          <Input placeholder='Full Name' name="fullname" fontSize={14} type='text'
               size={"sm"}
               value={inputs.fullname}
-              onChange={(e) => setInputs({...inputs, fullname:e.target.value})}
+              onChange={handleInputChange}
           />
           <InputGroup>
-              <Input placeholder='Password' fontSize={14} type={showPassword ? "text" : "password"}
+              <Input placeholder='Password' name="password" fontSize={14} type={showPassword ? "text" : "password"}
                   size={"sm"}
                   value={inputs.password}
-                  onChange={(e) => setInputs({...inputs, password:e.target.value})}
+                  onChange={handleInputChange}
               />
               <InputRightElement h={"full"}>
                   <Button variant={"ghost"} size={"sm"} onClick={() => setShowPassword(!showPassword)}>

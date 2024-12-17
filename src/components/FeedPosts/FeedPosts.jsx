@@ -1,4 +1,4 @@
-import { Container, VStack, Flex, SkeletonCircle, Skeleton, Box } from "@chakra-ui/react"
+import { Container, VStack, Flex, SkeletonCircle, Skeleton, Box, Text } from "@chakra-ui/react"
 import  FeedPost  from "./FeedPost"
 import useGetFeedPosts from "../../hooks/useGetFeedPosts"
 import { useEffect, useState } from "react"
@@ -7,6 +7,8 @@ import useLoadImages from "../../hooks/useLoadImages"
 export const FeedPosts = () => {
   const { isLoading, posts } = useGetFeedPosts()
   const {imagesLoaded, loadImages} = useLoadImages()
+  const showSkeleton = isLoading || !imagesLoaded
+  const noPostsFound = !isLoading && posts.length === 0
 
   useEffect(() => {
     if (!isLoading && posts.length > 0) {
@@ -14,9 +16,11 @@ export const FeedPosts = () => {
     }
   }, [isLoading, posts])
 
+  if(noPostsFound) return <NoPostsFound/>
+
   return (
     <Container maxW={"container.sm"} py={10} px={2}>
-        {(isLoading || !imagesLoaded) &&
+        {showSkeleton &&
           [0, 1, 2, 3].map((_, idx) => (
             <VStack key={idx} gap={4} alignItems={"flex-start"} mb={10}>
                 <Flex gap={2}>
@@ -31,7 +35,7 @@ export const FeedPosts = () => {
                 </Skeleton>
             </VStack>
           ))}
-        {!isLoading && (
+        {!showSkeleton && (
           <>
             {posts.map((post) => (
               <FeedPost post={post} key={post.id}/>
@@ -41,3 +45,12 @@ export const FeedPosts = () => {
     </Container>
   )
 }
+
+const NoPostsFound = () => {
+  return (
+    <Flex flexDir='column' textAlign={"center"} mx={"auto"} mt={10}>
+      <Text fontSize={"2xl"}>No Posts Found🤔</Text>
+      <Text as={"span"} fontSize={"2xl"}>Follow other users to see their posts in your feed.</Text>
+    </Flex>
+  );
+};

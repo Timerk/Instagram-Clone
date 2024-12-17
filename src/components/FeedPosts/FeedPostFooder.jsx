@@ -42,12 +42,14 @@ export const FeedPostFooder = ({post, isProfilePost, userProfile}) => {
         <Text fontWeight={600} fontSize={"sm"} w={"full"}>
           {likes} likes
         </Text>
-        <Text fontWeight={700} fontSize={"sm"} w={"full"}>
-          {userProfile?.username}{" "}
-          <Text as={"span"} fontWeight={400} fontSize={"sm"}>
-            {post?.caption}
-          </Text>
-        </Text>        
+        {post.caption !== "" && (        
+          <Text fontWeight={700} fontSize={"sm"} w={"full"}>
+            {userProfile?.username}{" "}
+            <Text as={"span"} fontWeight={400} fontSize={"sm"}>
+              {post.caption}
+            </Text>
+          </Text>)
+        }
         <Text fontWeight={400} fontSize={"sm"} w={"full"} cursor={"pointer"} color={"gray"} onClick={onOpen}>
               View other comments
         </Text>

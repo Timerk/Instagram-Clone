@@ -8,8 +8,7 @@ import { Link as RouterLink } from "react-router-dom"
 import { useBreakpointValue } from "@chakra-ui/react"
 import { useState, useEffect } from "react"
 import FeedPost from "../../components/FeedPosts/FeedPost"
-import { Button } from "@chakra-ui/react"
-import { IoIosArrowBack } from "react-icons/io";
+import { IoIosArrowBack } from "react-icons/io"
 
 export const ProfilePage = () => {
   const username = useParams()

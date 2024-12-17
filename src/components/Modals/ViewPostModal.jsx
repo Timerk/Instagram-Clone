@@ -1,4 +1,5 @@
-import { Avatar, Button, Divider, Flex, Image, Modal, ModalBody, ModalCloseButton, ModalContent, ModalOverlay, Text, VStack, Box } from "@chakra-ui/react"
+import { Avatar, Button, Divider, Flex, Image, Modal, ModalBody, ModalCloseButton, ModalContent, ModalOverlay, Text, VStack } from "@chakra-ui/react"
+import { Link } from "react-router-dom"
 import { MdDelete } from "react-icons/md"
 import { Comment } from "../Comment/Comment"
 import { Caption } from "../Comment/Caption"
@@ -39,8 +40,10 @@ const ViewPostModal = ({isOpen, onClose, post, userProfile, handleLikePost, like
               <Flex flex={1} flexDirection={"column"} px={{ base: 4, md: 10 }} w={{ base: "full" }}>
                 <Flex alignItems={"center"} justifyContent={"space-between"}>
                   <Flex gap={4} alignItems={"center"}>
-                    <Avatar src={userProfile?.profilePicURL} alt="profile avatar" size={"sm"}/>
-                    <Text fontSize={12} fontWeight={"bold"}>{userProfile?.username}</Text>
+                    <Link to={`/${userProfile?.username}`} style={{ display: "contents" }}>
+                      	<Avatar src={userProfile?.profilePicURL} alt="profile avatar" size={"sm"}/>
+                      	<Text fontSize={12} fontWeight={"bold"}>{userProfile?.username}</Text>
+                    </Link>
                   </Flex>
 
                   {authUser && userProfile && authUser.uid === userProfile.uid && (
