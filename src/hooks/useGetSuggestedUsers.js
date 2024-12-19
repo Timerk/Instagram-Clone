@@ -5,11 +5,13 @@ import { useEffect } from "react"
 import { collection, getDocs, query, where, orderBy, limit  } from "firebase/firestore"
 import { firestore } from "../firebase/firebase"
 
-const useGetSuggestedUsers = () => {
+const useGetSuggestedUsers = ({ inNotificationsTab }) => {
     const [isLoading, setIsLoading] = useState(true)
     const [suggestedUsers, setSuggestedUsers] = useState([])
     const authUser = useAuthStore((state) => state.user)
     const showToast = useShowToast()
+    
+    const userToFetch = inNotificationsTab ? 10 : 3
 
     useEffect(() => {
         const getSuggestedUsers = async () => {
@@ -18,7 +20,7 @@ const useGetSuggestedUsers = () => {
                 const q = query(usersRef,
                     where("uid", "not-in", [authUser.uid, ...authUser.following]),
 					orderBy("uid"),
-					limit(3)                   
+					limit(userToFetch)                   
                 )
 
                 const querySnapshot = await getDocs(q)

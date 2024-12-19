@@ -4,13 +4,13 @@ import Notifications from "./Notifications";
 import ProfileLink from "./ProfileLink";
 import Search from "./Search";
 
-export const SidebarItems = () => {
+export const SidebarItems = ({toogleNotifications}) => {
 	return (
 		<>
 			<Home />
 			<Search />
 			<CreatePost />
-			<Notifications />
+			<Notifications toogleNotifications={toogleNotifications}/>
 			<ProfileLink />
 		</>
 	);

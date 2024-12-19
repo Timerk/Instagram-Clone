@@ -3,8 +3,8 @@ import  { SuggestedUser }  from "./SuggestedUser"
 import SuggestedUsersHeader from "./SuggestedUsersHeader"
 import { VStack, Flex, Box, Text, Link as ChakraLink, Skeleton, SkeletonCircle, Stack, HStack } from "@chakra-ui/react"
 
-export const SuggestedUsers = () => {
-  const { isLoading, suggestedUsers} = useGetSuggestedUsers()
+export const SuggestedUsers = ({inNotificationsTab}) => {
+  const { isLoading, suggestedUsers} = useGetSuggestedUsers({inNotificationsTab})
 
   return (
     <>
@@ -23,8 +23,8 @@ export const SuggestedUsers = () => {
       }
 
       {!isLoading &&  	      
-    	  <VStack py={8} px={6} gap={4}>
-    	    <SuggestedUsersHeader/>
+    	  <VStack py={8} px={ !inNotificationsTab ? 6 : 0 } gap={4}>
+          {!inNotificationsTab && (<SuggestedUsersHeader/>)}
           {suggestedUsers.length !== 0 && (    	      
             <Flex alignItems={"center"} justifyContent={"space-between"} w={"full"} fontSize={12} fontWeight={"medium"}>
     	        <Text fontSize={12} fontWeight={"bold"} color={"whiteAlpha.700"}>
@@ -37,15 +37,17 @@ export const SuggestedUsers = () => {
           )}
 
           {suggestedUsers.map(user =>(
-    	      <SuggestedUser user={user} key={user.id}/>
+    	      <SuggestedUser user={user} key={user.id} inNotificationsTab={inNotificationsTab}/>
     	    ))}
 
-    	    <Box fontSize={12} color={"whiteAlpha.700"} mt={5} alignSelf={"start"}>
-    	      © 2024 BUILT BY{" "}
-    	      <ChakraLink href="https://github.com/Timerk" isExternal fontSize={14} color="blue.500">
-    	        Tim Berk
-    	      </ChakraLink>
-    	    </Box>
+          {!inNotificationsTab && (    	    
+            <Box fontSize={12} color={"whiteAlpha.700"} mt={5} alignSelf={"start"}>
+    	        © 2024 BUILT BY{" "}
+    	        <ChakraLink href="https://github.com/Timerk" isExternal fontSize={14} color="blue.500">
+    	          Tim Berk
+    	        </ChakraLink>
+    	      </Box>
+          )}
     	  </VStack>
       }
     </>

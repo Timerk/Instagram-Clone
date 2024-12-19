@@ -11,7 +11,7 @@ export const HomePage = () => {
           <FeedPosts/>
         </Box>
         <Box flex={3} mr={20} maxW={"300px"} display={{base:"none", lg:"block"}} py={5}>
-          <SuggestedUsers/>
+          <SuggestedUsers inNotificationsTab={false}/>
         </Box>
       </Flex>
     </Container>
