@@ -19,7 +19,7 @@ export const FeedPostFooder = ({post, isProfilePost, userProfile}) => {
 
   const handleSubmitComment = async() =>{
     try {
-      await handlePostComment(post.id, comment)
+      await handlePostComment(post, comment)
       setComment("")
     } catch (error) {
       showToast("Error", error.message, "error")

@@ -1,7 +1,7 @@
 import { Container, VStack, Flex, SkeletonCircle, Skeleton, Box, Text } from "@chakra-ui/react"
 import  FeedPost  from "./FeedPost"
 import useGetFeedPosts from "../../hooks/useGetFeedPosts"
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import useLoadImages from "../../hooks/useLoadImages"
 
 export const FeedPosts = () => {

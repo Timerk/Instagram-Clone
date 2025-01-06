@@ -3,7 +3,7 @@ import useAuthStore from "../../store/authStore"
 import useFollowUser from "../../hooks/useFollowUser"
 import { Link } from "react-router-dom"
 
-export const SuggestedUser = ({ user, setUser }) => {
+export const SuggestedUser = ({ user, setUser, inNotificationsTab }) => {
   const { isFollowing, isUpdating, handleFollowUser } = useFollowUser(user?.uid)
   const authUser = useAuthStore((state) => state.user)
 
@@ -23,15 +23,15 @@ export const SuggestedUser = ({ user, setUser }) => {
     <Flex alignItems={"center"} justifyContent={"space-between"} w={"full"}>
       <Flex alignItems={"center"} gap={2}>
         <Link to={`${user?.username}`}>
-          <Avatar src={user?.profilePicURL || ""} size={"md"} cursor={"pointer"}/>
+          <Avatar src={user?.profilePicURL || ""} size={inNotificationsTab ? "sm" : "md"} cursor={"pointer"}/>
         </Link>
-          <VStack spacing={2}>
+          <VStack spacing={inNotificationsTab ? 0.2 : 2 }>
             <Link to={`${user?.username}`} style={{ display: "contents" }}>
               <Text fontSize={12} fontWeight={"bold"} alignSelf={"start"} cursor={"pointer"}>
                 {user.username}
               </Text>
-            </Link>I
-            <Text fontSize={12} fontWeight={"bold"} color={"whiteAlpha.700"}>
+            </Link>
+            <Text fontSize={12} fontWeight={"bold"} color={"whiteAlpha.700"} alignSelf={"start"}>
               {user.followers.length} followers
             </Text>
           </VStack>

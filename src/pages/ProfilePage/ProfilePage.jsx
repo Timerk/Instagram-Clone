@@ -9,7 +9,7 @@ import { useBreakpointValue } from "@chakra-ui/react"
 import { useState, useEffect } from "react"
 import FeedPost from "../../components/FeedPosts/FeedPost"
 import { IoIosArrowBack } from "react-icons/io"
-import { base } from "framer-motion/client"
+import usePostStore from "../../store/postStore"
 
 export const ProfilePage = () => {
   const username = useParams()
@@ -17,6 +17,14 @@ export const ProfilePage = () => {
   const isLargeScreen = useBreakpointValue({ base: false, md: true })
   const [postClicked, setPostClicked] = useState(false)
   const [inspectedPost, setInspectedPost] = useState(null)
+  const getPostById = usePostStore((state) => state.getPostById)
+  const storePost = getPostById(inspectedPost?.id)
+
+  useEffect(() => {
+    if (storePost && storePost !== inspectedPost) {
+      setInspectedPost(storePost);
+    }
+  }, [storePost, inspectedPost]);
 
   const userNotFound = !isLoading && !userProfile
 

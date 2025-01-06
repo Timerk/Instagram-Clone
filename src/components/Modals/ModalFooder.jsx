@@ -3,7 +3,6 @@ import { useRef, useState } from 'react'
 import { NotificationsLogo, UnlikeLogo, CommentLogo } from '../../assets/constants'
 import useCreateComment from '../../hooks/useCreateComment'
 import useShowToast from '../../hooks/useShowToast'
-import useLikePost from '../../hooks/useLikePost'
 
 const ModalFooder = ({post, authUser, handleLikePost, isLiked, likes}) => {
 
@@ -14,8 +13,9 @@ const ModalFooder = ({post, authUser, handleLikePost, isLiked, likes}) => {
 
   const handleSubmitComment = async() =>{
     try {
-      await handlePostComment(post.id, comment)
+      await handlePostComment(post, comment)
       setComment("")
+
     } catch (error) {
       showToast("Error", error.message, "error")
     }

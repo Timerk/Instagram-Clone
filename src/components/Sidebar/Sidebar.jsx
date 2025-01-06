@@ -5,10 +5,10 @@ import { BiLogOut } from "react-icons/bi";
 import useLogout from "../../hooks/useLogout";
 import { SidebarItems } from "./SidebarItems";
 
-export const Sidebar = () => {
-
-    const{handleLogout, isLoggingOut} = useLogout();
-
+export const Sidebar = ({toogleNotifications}) => {
+    
+    const{handleLogout, isLoggingOut} = useLogout()
+    
     return (
       <Box
           height={"100vh"}
@@ -39,7 +39,7 @@ export const Sidebar = () => {
               <InstagramMobileLogo />
               </Link>
               <Flex direction={"column"} gap={5} cursor={"pointer"}>
-                <SidebarItems/>
+                <SidebarItems toogleNotifications={toogleNotifications}/>
               </Flex>
               <Tooltip
                   hasArrow

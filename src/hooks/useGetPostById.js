@@ -3,22 +3,20 @@ import { useState, useEffect } from "react";
 import { doc, getDoc } from "firebase/firestore";
 import { firestore } from "../firebase/firebase";
 
-const useGetUserProfileById = (userId) => {
+const useGetPostById = (postId) => {
     const [isLoading, setIsLoading] = useState(true);
-    const [userProfile, setUserProfile] = useState(null);
+    const [post, setPost] = useState(null);
     const showToast = useShowToast();
 
     useEffect(() => {
-        if (!userId) return
-
         const getUserProfile = async () => {
             setIsLoading(true);
-            setUserProfile(null);
+            setPost(null);
             try {
-                const userRef = await getDoc(doc(firestore, "users", userId));
-                
-                if (userRef.exists()) {
-                    setUserProfile(userRef.data());
+                const postRef = await getDoc(doc(firestore, "posts", postId));
+
+                if (postRef.exists()) {
+                    setPost(postRef.data());
                 }
                 
             } catch (error) {
@@ -28,14 +26,12 @@ const useGetUserProfileById = (userId) => {
             }
         };
 
-        if (userId) {
+        if (postId) {
             getUserProfile();
         }
-    }, [userId, showToast]);
+    }, [postId, showToast]);
 
-    return { isLoading, userProfile };
+    return { isLoading, post };
 };
 
-export default useGetUserProfileById;
-
-
+export default useGetPostById;

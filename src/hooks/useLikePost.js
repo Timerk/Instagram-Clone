@@ -4,6 +4,7 @@ import useShowToast from "./useShowToast"
 import { arrayRemove, arrayUnion, doc, updateDoc } from "firebase/firestore"
 import { firestore } from "../firebase/firebase"
 import usePostStore from "../store/postStore"
+import useAddNotification from "./useAddNotification"
 
 const useLikePost = ({post}) => {
     const [isLoading, setIsLoading] = useState(false)
@@ -12,6 +13,7 @@ const useLikePost = ({post}) => {
     const [likes, setLikes] = useState(post.likes.length)
     const [isLiked, setIsLiked] = useState(post.likes.includes(authUser?.uid))
     const addOrRemoveLike = usePostStore(state => state.addOrRemoveLike)
+    const addNotification = useAddNotification()
 
     const handleLikePost = async () => {
         if (isLoading) return
@@ -24,6 +26,8 @@ const useLikePost = ({post}) => {
             await updateDoc(postRef, {
                 likes: isLiked ? arrayRemove(authUser.uid) : arrayUnion(authUser.uid)
             })
+
+            if (authUser.uid !== post.createdBy) addNotification(post, true, authUser)
 
             setIsLiked(!isLiked)
             isLiked ? setLikes(likes - 1) : setLikes(likes + 1)
