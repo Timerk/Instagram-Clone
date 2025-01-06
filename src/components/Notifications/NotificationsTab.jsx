@@ -21,7 +21,7 @@ const NotificationsTab = () => {
                 borderRight={{ base: "none", sm: "1px solid" }}
                 borderColor={{ base: "none", sm: "whiteAlpha.300" }}
                 py={8}
-                px={2}
+                px={{ base: 4, md: 2 }}
                 position={"sticky"}
                 maxW={{ base: "full", sm: "400px" }} 
                 minW={{ sm: "200px" }}              
