@@ -31,7 +31,7 @@ export const SuggestedUser = ({ user, setUser, inNotificationsTab }) => {
                 {user.username}
               </Text>
             </Link>
-            <Text fontSize={12} fontWeight={"bold"} color={"whiteAlpha.700"}>
+            <Text fontSize={12} fontWeight={"bold"} color={"whiteAlpha.700"} alignSelf={"start"}>
               {user.followers.length} followers
             </Text>
           </VStack>

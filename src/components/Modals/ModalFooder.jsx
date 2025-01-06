@@ -13,7 +13,7 @@ const ModalFooder = ({post, authUser, handleLikePost, isLiked, likes}) => {
 
   const handleSubmitComment = async() =>{
     try {
-      await handlePostComment(post.id, comment)
+      await handlePostComment(post, comment)
       setComment("")
 
     } catch (error) {

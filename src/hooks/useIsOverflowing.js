@@ -1,14 +1,15 @@
 import { useState, useEffect, useRef } from "react";
 
-const useIsOverflowing = () => {
+const useIsOverflowing = (dependencies = []) => {
   const [isOverflowing, setIsOverflowing] = useState(false);
   const ref = useRef(null);
+  const [isCheckingOverflow, setIsCheckingOverflow] = useState(false);
 
   useEffect(() => {
     const checkOverflow = () => {
       if (ref.current) {
         const { scrollWidth, clientWidth } = ref.current;
-        setIsOverflowing(scrollWidth > clientWidth);
+        setIsOverflowing(scrollWidth >= clientWidth);
       }
     };
 
@@ -31,7 +32,7 @@ const useIsOverflowing = () => {
       resizeObserver.disconnect();
       window.removeEventListener("resize", checkOverflow);
     };
-  }, []);
+  }, dependencies);
 
   return [isOverflowing, ref];
 };

@@ -1,10 +1,13 @@
 import useGetSuggestedUsers from "../../hooks/useGetSuggestedUsers"
+import SeeAllModal from "../Modals/SeeAllModal"
 import  { SuggestedUser }  from "./SuggestedUser"
 import SuggestedUsersHeader from "./SuggestedUsersHeader"
-import { VStack, Flex, Box, Text, Link as ChakraLink, Skeleton, SkeletonCircle, Stack, HStack } from "@chakra-ui/react"
+import { VStack, Flex, Box, Text, Link as ChakraLink, Skeleton, SkeletonCircle, Stack, HStack, useDisclosure } from "@chakra-ui/react"
 
-export const SuggestedUsers = ({inNotificationsTab}) => {
-  const { isLoading, suggestedUsers} = useGetSuggestedUsers({inNotificationsTab})
+export const SuggestedUsers = ({inNotificationsTab, usersToFetch}) => {
+  const { isLoading, suggestedUsers} = useGetSuggestedUsers({ usersToFetch })
+  const { isOpen, onOpen, onClose } = useDisclosure()
+  const limitedSuggestedUsers = inNotificationsTab ? suggestedUsers.slice(0, 10) : suggestedUsers.slice(0, 3);
 
   return (
     <>
@@ -25,18 +28,18 @@ export const SuggestedUsers = ({inNotificationsTab}) => {
       {!isLoading &&  	      
     	  <VStack py={8} px={ !inNotificationsTab ? 6 : 0 } gap={4}>
           {!inNotificationsTab && (<SuggestedUsersHeader/>)}
-          {suggestedUsers.length !== 0 && (    	      
+          {limitedSuggestedUsers.length !== 0 && (    	      
             <Flex alignItems={"center"} justifyContent={"space-between"} w={"full"} fontSize={12} fontWeight={"medium"}>
     	        <Text fontSize={12} fontWeight={"bold"} color={"whiteAlpha.700"}>
     	          Suggested for you
     	        </Text>
-    	        <Text cursor={"pointer"} fontSize={12} fontWeight={"bold"} color={"blue.500"} _hover={{color: "whiteAlpha.700"}}>
+    	        <Text cursor={"pointer"} fontSize={12} fontWeight={"bold"} color={"blue.500"} _hover={{color: "whiteAlpha.700"}} onClick={onOpen}>
     	          See All
     	        </Text>
     	      </Flex>
           )}
 
-          {suggestedUsers.map(user =>(
+          {limitedSuggestedUsers.map(user =>(
     	      <SuggestedUser user={user} key={user.id} inNotificationsTab={inNotificationsTab}/>
     	    ))}
 
@@ -50,6 +53,8 @@ export const SuggestedUsers = ({inNotificationsTab}) => {
           )}
     	  </VStack>
       }
+
+      <SeeAllModal isOpen={isOpen} onClose={onClose} elementsToDisplay={suggestedUsers} isNotifications={false}/>
     </>
 
   )
