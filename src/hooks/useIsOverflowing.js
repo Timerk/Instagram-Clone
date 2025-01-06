@@ -4,7 +4,6 @@ const useIsOverflowing = (dependencies = []) => {
   const [isOverflowing, setIsOverflowing] = useState(false);
   const ref = useRef(null);
 
-
   useEffect(() => {
     const checkOverflow = () => {
       if (ref.current) {
