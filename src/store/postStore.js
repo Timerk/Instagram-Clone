@@ -38,6 +38,9 @@ const usePostStore = create((set) => ({
         return post;
       }),
     })),
+
+  getPostById: (id) => usePostStore((state) => state.posts.find((post) => post.id === id)),
+  
   }));
 
 export default usePostStore;

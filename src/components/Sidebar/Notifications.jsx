@@ -1,7 +1,10 @@
 import { Tooltip, Box, Flex } from "@chakra-ui/react"
 import { NotificationsLogo } from "../../assets/constants"
+import { useState } from "react"
 
-const Notifications = () => {
+const Notifications = ({toogleNotifications}) => {
+  const [openTab, setOpenTab] = useState(false)
+
   return (
     <Tooltip
         hasArrow
@@ -19,6 +22,7 @@ const Notifications = () => {
         p={2}
         w={{ base: 10, md: "full" }}
         justifyContent={{ base: "center", md: "flex-start" }}
+        onClick={toogleNotifications}
       >
         <NotificationsLogo />
         <Box display={{ base: "none", md: "block" }}>Notifications</Box>
