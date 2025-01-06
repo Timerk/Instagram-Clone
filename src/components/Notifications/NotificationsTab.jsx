@@ -21,13 +21,17 @@ const NotificationsTab = () => {
                 borderRight={{ base: "none", sm: "1px solid" }}
                 borderColor={{ base: "none", sm: "whiteAlpha.300" }}
                 py={8}
+                px={2}
                 position={"sticky"}
-                maxW={{ base: "full", sm: "500px" }}
+                maxW={{ base: "full", sm: "400px" }} 
+                minW={{ sm: "200px" }}              
+                w={{ base: "full", sm: "auto" }}    
                 top={0}
                 left={0}
                 alignItems={"center"}
-                justifyContent={"center"}
-                px={2}
+                justifyContent={"flex-start"}
+                display="flex"
+                flexDirection="column"  
             >
                 <VStack py={4} align="stretch" w={"full"}>
                     {notificationsEmpty ?
