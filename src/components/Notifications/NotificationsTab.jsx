@@ -22,7 +22,7 @@ const NotificationsTab = () => {
                 borderColor={{ base: "none", sm: "whiteAlpha.300" }}
                 py={8}
                 position={"sticky"}
-                maxW={{ base: "full", sm: "300px" }}
+                maxW={{ base: "full", sm: "500px" }}
                 top={0}
                 left={0}
                 alignItems={"center"}
